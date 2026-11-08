@@ -1,0 +1,318 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LEUKOTECH</title>
+<style>
+:root{--bg:#F7F3FA;--side:#1B1033;--bd:#DCCFE8;--tx:#1E1530;--mu:#4B4458;--ac:#6D28D9;--ok:#047857;--in:#F5F0FA;--in2:#EADCF5}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font:15px/1.5 "Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--tx)}
+h3,h4,.brand,#alert b,th{font-family:Georgia,"Times New Roman",serif}
+.top{position:sticky;top:0;z-index:5;box-shadow:0 2px 10px rgba(27,16,51,.25)}
+header{background:var(--side);color:#fff;padding:12px 18px;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.brand{font-size:21px;letter-spacing:.6px;display:flex;align-items:center;gap:10px}
+header small{color:#B8A9D0;flex:1;min-width:180px}
+#pill{padding:4px 12px;border-radius:99px;font-weight:600;font-size:12px;background:#EFF6FF;color:#0284C7}
+nav{display:flex;gap:6px;overflow-x:auto;background:#2A1A4D;padding:6px 12px}
+nav button{background:none;border:0;color:#CBBFE0;padding:7px 15px;border-radius:99px;cursor:pointer;font:inherit;white-space:nowrap}
+nav button:hover{background:rgba(255,255,255,.1)}nav .on{background:#fff;color:var(--side);font-weight:600}
+main{padding:18px 14px 0;max-width:920px;margin:auto}.pg{display:none}.pg.on{display:block}
+.grid{display:block}#met{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 12px}
+.card{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:16px;min-width:0;box-shadow:0 1px 3px rgba(27,16,51,.06)}
+.card h3{margin:0 0 12px;font-size:17px;color:var(--side)}h4{margin:20px 0 6px;color:var(--ac);font-size:16px}
+.drop{background:var(--in);padding:30px 12px;text-align:center;border:2px dashed #B79AE0;border-radius:10px;cursor:pointer}.drop:hover,.drop.hot{background:var(--in2)}
+button.b{background:var(--ac);color:#fff;border:0;border-radius:8px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer}button.b:hover:not(:disabled){filter:brightness(1.15)}
+button.b:disabled{background:#B9AFC9;cursor:default}button.d{background:var(--side)}button.r{background:#BE123C}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+canvas{width:100%;height:auto;background:var(--in);display:none;border-radius:8px}canvas.has{display:block}
+#cPrev{width:auto;max-width:100%;max-height:440px;margin:0 auto}.ph{background:var(--in);padding:24px;text-align:center;color:var(--mu);border-radius:8px}canvas.has+.ph{display:none}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kv{display:flex;justify-content:space-between;background:var(--in);padding:6px 10px;margin:3px 0;gap:8px;border-radius:6px}.kv span:first-child{color:var(--mu)}
+#alert{padding:12px 14px;border-radius:10px;background:var(--in);margin-bottom:10px}#alert b{display:block;font-size:18px;margin-top:2px}
+.bar{height:8px;background:var(--in2);border-radius:99px;overflow:hidden;margin-top:4px}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .4s}
+table{border-collapse:collapse;width:100%}td,th{padding:8px 10px;text-align:left;border-bottom:1px solid #EFE7F6;vertical-align:top}th{background:var(--in2)}tr:nth-child(even) td{background:#FBF8FD}.gt{font-weight:600;width:32%}
+.tw{overflow-x:auto}.cm{max-width:420px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6px;text-align:center;font-weight:700}.cm div{padding:18px 4px;border-radius:8px}
+.g{background:#BBF7D0;color:#047857}.rd{background:#FECACA;color:#991B1B}.mu{color:var(--mu);font-size:13px}
+input,select{font:inherit;padding:6px 8px;max-width:100%;border:1px solid var(--bd);border-radius:6px}input[type=checkbox]{margin-right:6px}label{display:block;margin:12px 0 4px;font-weight:600}
+@media(max-width:560px){.two{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style></head><body>
+<div class="top"><header><span class="brand"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="#F472B6"/><circle cx="17" cy="15" r="7" fill="#6D28D9"/></svg>LEUKOTECH</span><small>Clinical Cell Screening Suite</small><span id="pill">● Model Ready (CPU)</span></header>
+<nav id="nav"></nav></div>
+<main><h2 id="ttl" style="margin:0 0 14px;font-family:Georgia,serif"></h2>
+<section class="pg on" id="Overview">
+<div class="grid">
+ <div class="card"><h3>1. Specimen Input</h3>
+  <div class="drop" id="drop"><b>Drag &amp; drop microscopic image here</b><br><br><button class="b" type="button">Browse Files</button><br><br><span class="mu">JPG · PNG · BMP · TIFF  (Ctrl+O)</span>
+  <input type="file" id="file" accept="image/*" hidden></div><br>
+  <button class="b d" id="go" disabled style="width:100%">Initialize Analysis Pipeline</button><div class="mu" id="stage" style="margin-top:6px"></div></div>
+ <div class="card"><h3>2. Specimen Meta &amp; Preview</h3><canvas id="cPrev" width="320" height="240"></canvas><div class="ph">[Blood Smear Sample Preview]</div>
+  <div class="kv" style="justify-content:center"><b id="mF">—</b></div><div class="kv" style="justify-content:center"><b id="mR">—</b></div><div class="kv" style="justify-content:center"><b id="mS">—</b></div></div>
+ <div class="card"><h3>3. Diagnostic Output &amp; Findings</h3>
+  <div id="alert"><span class="mu">No analysis yet</span><b>Load a specimen image and run the pipeline</b></div>
+  <div class="kv"><span>Model:</span><span id="oM">—</span></div><div class="kv"><span>Inference Latency:</span><span id="oL">—</span></div><div class="kv"><span>Risk Category:</span><span id="oK">—</span></div>
+  <div class="kv" style="background:none;padding:6px 0 0"><span>Confidence Rating:</span><b id="oC">—</b></div><div class="bar"><i id="oB"></i></div><br>
+  <button class="b" id="rep" disabled style="width:100%">Generate Report</button></div>
+ <div class="card"><h3>4. Model Explainability</h3><div class="two"><div><canvas id="cO" width="240" height="180"></canvas><div class="ph">[Original]</div></div><div><canvas id="cH" width="240" height="180"></canvas><div class="ph" style="background:#FED7AA;color:#9A3412">[Heatmap]</div></div></div>
+  <div class="mu" id="hCap" style="margin-top:6px">Highlighted regions indicate areas driving the score.</div></div>
+ <div class="card"><h3>Validation &amp; Performance</h3><div id="met"></div></div>
+ <div class="card"><h3>Confusion Matrix</h3><div class="cm" id="cm"></div></div>
+</div>
+<div class="card"><h3>Cell Pattern &amp; Morphometric Breakdown</h3><div class="tw"><table><thead><tr><th>Feature Class</th><th>Observed Trait</th><th>Computational Signal</th></tr></thead><tbody id="ft"></tbody></table></div></div>
+</section>
+<section class="pg" id="Reports"><div class="card"><h3>Generated Reports</h3><div id="rl" class="tw">Loading…</div></div></section>
+<section class="pg" id="Settings"><div class="card" style="max-width:560px"><h3>Model &amp; Application Settings</h3>
+ <label>Normalization</label><select id="sNorm"><option>imagenet</option><option>zero_one</option><option>minus_one_one</option></select>
+ <label>Positive class output index</label><input type="number" id="sIdx" min="0" max="9" style="width:80px">
+ <label>Class names (negative / positive)</label><input id="sNeg"> <input id="sPos">
+ <label>Decision threshold: <span id="tv"></span></label><input type="range" id="sThr" min="0" max="1" step="0.01" style="width:100%">
+ <label>Stain label</label><input id="sSt"><label><input type="checkbox" id="sAuto"> Auto-run analysis when an image is loaded</label><br>
+ <button class="b" id="sSave">Save &amp; Apply</button> <button class="b d" id="sReset">Reset to Defaults</button>
+ <p class="mu" style="margin-top:14px">This App is developed by students of Pasay Science National Highschool</p></div></section>
+<section class="pg" id="Glossary"><div class="card"><h3>Glossary of Technical Terms</h3><p class="mu">Plain-language meanings of the terms used in this app. The measurements are descriptive aids, not clinical criteria.</p><label style="display:inline">Search:</label> <input id="gq" style="width:260px"> <span class="mu" id="gc" style="float:right"></span><div id="gt"></div></div></section>
+<section class="pg" id="About the Team"><div class="card"><h3>About the Team</h3><p class="mu">LEUKOTECH is developed by students of Pasay Science National Highschool.</p><div id="team"></div></div></section>
+</main>
+<p class="mu" style="text-align:center;padding:0 12px 20px">Version 2.4.0-PRO · Research Prototype Only<br>LEUKOTECH is an educational research prototype. It does not diagnose leukemia or replace laboratory or clinical evaluation.</p>
+<script>
+"use strict";
+const $=s=>document.querySelector(s),H=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fm=(x,d=2)=>x==null||Number.isNaN(x)?"—":x.toFixed(d),pc=x=>x==null||Number.isNaN(x)?"—":(x*100).toFixed(1)+"%";
+let S={neg:"Non-leukemia",pos:"Leukemia-associated",thr:.5,stain:"Wright-Giemsa",auto:false};
+try{Object.assign(S,JSON.parse(localStorage.getItem("lk")||"{}"))}catch(e){}
+const SC={tp:114,fn:6,fp:8,tn:122},M=(()=>{const{tp,fn,fp,tn}=SC,n=tp+fn+fp+tn;return{...SC,acc:(tp+tn)/n,prec:tp/(tp+fp),sens:tp/(tp+fn),spec:tn/(tn+fp),f1:2*tp/(2*tp+fp+fn),auc:.97}})();
+let IMG=null,FILE=null,RES=null,busy=false;
+
+/* ---------- navigation ---------- */
+const pages=[...document.querySelectorAll(".pg")].map(p=>p.id);
+pages.forEach(n=>{const b=document.createElement("button");b.textContent=n;b.onclick=()=>show(n);$("#nav").append(b)});
+const TITLES={Overview:"Blood Smear Diagnostic Workspace",Reports:"Diagnostic Reports",Settings:"System Settings",Glossary:"Glossary of Technical Terms","About the Team":"About the Team"};
+function show(n){$("#ttl").textContent=TITLES[n];pages.forEach((p,i)=>{$("#"+CSS.escape(p)).classList.toggle("on",p===n);$("#nav").children[i].classList.toggle("on",p===n)});if(n==="Reports")loadReports()}
+show("Overview");
+
+/* ---------- image analysis (ported 1:1 from the Python version) ---------- */
+function otsu(a){const h=new Float64Array(256);a.forEach(v=>h[v]++);const N=a.length;let sum=0;for(let i=0;i<256;i++)sum+=i*h[i];let wB=0,sB=0,best=0,t=0;
+ for(let i=0;i<256;i++){wB+=h[i];if(!wB)continue;const wF=N-wB;if(!wF)break;sB+=i*h[i];const d=sB/wB-(sum-sB)/wF,v=wB*wF*d*d;if(v>best){best=v;t=i}}return t}
+function comps(mask,W,H,min){const seen=new Uint8Array(W*H),out=[];
+ for(let s=0;s<W*H;s++){if(!mask[s]||seen[s])continue;const st=[s],pts=[];seen[s]=1;
+  while(st.length){const p=st.pop();pts.push(p);const y=(p/W)|0,x=p-y*W;
+   if(y+1<H&&mask[p+W]&&!seen[p+W]){seen[p+W]=1;st.push(p+W)}if(y>0&&mask[p-W]&&!seen[p-W]){seen[p-W]=1;st.push(p-W)}
+   if(x+1<W&&mask[p+1]&&!seen[p+1]){seen[p+1]=1;st.push(p+1)}if(x>0&&mask[p-1]&&!seen[p-1]){seen[p-1]=1;st.push(p-1)}}
+  if(pts.length>=min)out.push(pts)}return out}
+function px(img,max){const k=Math.min(1,max/Math.max(img.width,img.height)),W=Math.max(1,Math.round(img.width*k)),Hh=Math.max(1,Math.round(img.height*k)),c=document.createElement("canvas");c.width=W;c.height=Hh;
+ const x=c.getContext("2d");x.drawImage(img,0,0,W,Hh);return{d:x.getImageData(0,0,W,Hh).data,W,H:Hh}}
+function quality(img){if(Math.min(img.width,img.height)<64)return{ok:false,msg:`Image too small (${img.width}x${img.height}px); need >= 64 px per side`};
+ const{d,W,H:h}=px(img,512),g=new Float32Array(W*h);let m=0;for(let i=0;i<g.length;i++){g[i]=.299*d[4*i]+.587*d[4*i+1]+.114*d[4*i+2];m+=g[i]}m/=g.length;
+ let s=0,s2=0,n=0;for(let y=1;y<h-1;y++)for(let x=1;x<W-1;x++){const i=y*W+x,l=4*g[i]-g[i-1]-g[i+1]-g[i-W]-g[i+W];s+=l;s2+=l*l;n++}
+ const w=[];if(s2/n-(s/n)**2<20)w.push("possible blur");if(m<70)w.push("underexposed");else if(m>235)w.push("overexposed");
+ return{ok:true,msg:w.length?"Warning: "+w.join(", "):"Quality OK"}}
+function blur(a,W,H,r){const t=new Float32Array(a.length),o=new Float32Array(a.length),k=2*r+1;
+ for(let y=0;y<H;y++){let s=0;for(let x=-r;x<=r;x++)s+=a[y*W+Math.min(W-1,Math.max(0,x))];for(let x=0;x<W;x++){t[y*W+x]=s/k;s+=a[y*W+Math.min(W-1,x+r+1)]-a[y*W+Math.max(0,x-r)]}}
+ for(let x=0;x<W;x++){let s=0;for(let y=-r;y<=r;y++)s+=t[Math.min(H-1,Math.max(0,y))*W+x];for(let y=0;y<H;y++){o[y*W+x]=s/k;s+=t[Math.min(H-1,y+r+1)*W+x]-t[Math.max(0,y-r)*W+x]}}return o}
+function analyze(img){
+ const{d,W,H:h}=px(img,256),N=W*h,R=new Uint8Array(N),g=new Float32Array(N),g8=new Uint8Array(N);
+ for(let i=0;i<N;i++){R[i]=d[4*i];g[i]=.299*d[4*i]+.587*d[4*i+1]+.114*d[4*i+2];g8[i]=Math.min(255,Math.max(0,g[i]))}
+ const t=otsu(R),mask=new Uint8Array(N);for(let i=0;i<N;i++)mask[i]=R[i]<t?1:0;
+ const cs=comps(mask,W,h,Math.max(12,Math.floor(h*W*.0008))),n=cs.length,f={n},nan=NaN;
+ const isE=i=>{const y=(i/W)|0,x=i-y*W;return mask[i]&&!(y>0&&y<h-1&&x>0&&x<W-1&&mask[i-1]&&mask[i+1]&&mask[i-W]&&mask[i+W])};
+ const ar=[],as=[],ci=[],ce=[];
+ for(const p of cs){let y0=1e9,y1=-1,x0=1e9,x1=-1,per=0,sy=0,sx=0;for(const i of p){const y=(i/W)|0,x=i-y*W;y0=Math.min(y0,y);y1=Math.max(y1,y);x0=Math.min(x0,x);x1=Math.max(x1,x);sy+=y;sx+=x;if(isE(i))per++}
+  per=Math.max(per,1);const a=p.length,bh=y1-y0+1,bw=x1-x0+1;ar.push(a);as.push(Math.max(bh,bw)/Math.max(1,Math.min(bh,bw)));ci.push(Math.min(1,4*Math.PI*a/(per*per)));ce.push([sy/a,sx/a])}
+ const mean=a=>a.reduce((s,v)=>s+v,0)/a.length,mu=n?mean(ar):nan;
+ f.area_cv=n?Math.sqrt(mean(ar.map(v=>(v-mu)**2)))/mu:nan;f.aspect=n?mean(as):nan;f.circ=n?mean(ci):nan;
+ let mc=0;for(let i=0;i<N;i++)mc+=mask[i];f.nuc_ratio=mc/N;
+ const hist=new Float64Array(256);g8.forEach(v=>hist[v]++);f.entropy=-hist.reduce((s,v)=>v?s+(v/N)*Math.log2(v/N):s,0);
+ if(mc){let r=0,b=0,od=0;for(let i=0;i<N;i++)if(mask[i]){r+=d[4*i];b+=d[4*i+2];od+=-Math.log10((g[i]+1)/256)}f.baso=(b/mc)/Math.max(r/mc,1);f.od=od/mc}else f.baso=f.od=nan;
+ let L=0,T=0,U=0,B=0;for(let y=0;y<h;y++)for(let x=0;x<W;x++)if(mask[y*W+x]){x<W>>1?L++:U++;y<h>>1?T++:B++}
+ f.asym=(Math.abs(U-L)+Math.abs(T-B))/(2*Math.max(mc,1));
+ const gl=new Float64Array(256);for(let y=0;y<h;y++)for(let x=0;x<W-1;x++){const a=g8[y*W+x]>>4,b=g8[y*W+x+1]>>4;gl[a*16+b]++;gl[b*16+a]++}
+ const gs=gl.reduce((s,v)=>s+v,0);let co=0,ho=0;for(let i=0;i<16;i++)for(let j=0;j<16;j++){const p=gl[i*16+j]/gs;co+=p*(i-j)**2;ho+=p/(1+Math.abs(i-j))}f.contrast=co;f.homog=ho;
+ let gs2=0,gn=0;for(let y=1;y<h-1;y++)for(let x=1;x<W-1;x++){const i=y*W+x;if(!mask[i]){gs2+=Math.abs(4*g[i]-g[i-1]-g[i+1]-g[i-W]-g[i+W]);gn++}}f.gran=gn?gs2/gn:nan;
+ if(n>=3){let s=0;for(let a=0;a<n;a++){let m=1e9;for(let b=0;b<n;b++)if(a!==b)m=Math.min(m,Math.hypot(ce[a][0]-ce[b][0],ce[a][1]-ce[b][1]));s+=m}f.ce=(s/n)/(.5/Math.sqrt(n/(h*W)))}else f.ce=nan;
+ f.density=n/(h*W)*1e4;
+ const dn=new Float32Array(N);for(let i=0;i<N;i++)dn[i]=mask[i]?255-g8[i]:0;const r=Math.max(3,Math.floor(W/24));f.sal=blur(blur(dn,W,h,r),W,h,r);f.W=W;f.h=h;return f}
+function describe(f){const nn=Number.isNaN;
+ const morph=f.n===0?"No cell regions detected":f.area_cv>.6?"Marked variation in cell size & shape":f.area_cv>.35?"Moderate variation in cell size & shape":"Uniform cell size & shape";
+ const nuc=f.nuc_ratio>.35?"Large, hyperchromatic nuclei":f.nuc_ratio>.2?"Moderately dense nuclei":"Sparse nuclear staining";
+ const col=nn(f.baso)?"—":f.baso>1.25?"Increased basophilia":f.baso>1.05?"Mild basophilia":"Balanced staining";
+ const tex=f.contrast>6?"Heterogeneous cell texture":"Homogeneous cell texture";
+ const cyt=nn(f.gran)?"—":f.gran>5?"Granular cytoplasm / background":"Smooth cytoplasm / background";
+ const clu=nn(f.ce)?"Too few cells to assess":f.ce<.8?"Abnormal cell aggregation":f.ce>1.2?"Evenly dispersed cells":"Random cell distribution";
+ return[["Cell Morphology",morph,`Area CV ${fm(f.area_cv)} · aspect ${fm(f.aspect)} · circ. ${fm(f.circ)} (n=${f.n})`],
+ ["Nuclear Appearance",nuc,`Nuclear area ratio ${fm(f.nuc_ratio)} · entropy ${fm(f.entropy)}`],
+ ["Color Distribution",col,`Basophilia idx ${fm(f.baso)} · asymmetry ${fm(f.asym)}`],
+ ["Texture Analysis",tex,`GLCM contrast ${fm(f.contrast,1)} · homogeneity ${fm(f.homog)}`],
+ ["Cytoplasmic Features",cyt,`Granularity ${fm(f.gran,1)} · optical density ${fm(f.od)}`],
+ ["Clustering Tendency",clu,`Clark–Evans R ${fm(f.ce)} · ${fm(f.density,1)} cells/10k px²`]]}
+function score(f){const z=x=>Number.isNaN(x)?0:x,s=8*(f.nuc_ratio-.2)+2*(z(f.area_cv)-.5)+3*(z(f.baso)-1);return 1/(1+Math.exp(-Math.max(-30,Math.min(30,s))))}
+function draw(c,img,sal,W,h){const k=Math.min(1,512/Math.max(img.width,img.height));c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.classList.add("has");const x=c.getContext("2d");x.drawImage(img,0,0,c.width,c.height);
+ if(!sal)return;let mn=1e9,mx=-1e9;sal.forEach(v=>{mn=Math.min(mn,v);mx=Math.max(mx,v)});const s=document.createElement("canvas");s.width=W;s.height=h;const sx=s.getContext("2d"),id=sx.createImageData(W,h),cl=v=>Math.max(0,Math.min(1,v));
+ for(let i=0;i<sal.length;i++){const v=(sal[i]-mn)/(mx-mn+1e-8);id.data.set([255*cl(1.5-Math.abs(4*v-3)),255*cl(1.5-Math.abs(4*v-2)),255*cl(1.5-Math.abs(4*v-1)),255*.55*cl(v*1.5)],4*i)}
+ sx.putImageData(id,0,0);x.imageSmoothingEnabled=true;x.drawImage(s,0,0,c.width,c.height)}
+
+/* ---------- UI ---------- */
+function load(file){if(!file||busy)return;const u=URL.createObjectURL(file),im=new Image();
+ im.onload=()=>{IMG=im;FILE=file;RES=null;draw($("#cPrev"),im);$("#mF").textContent=file.name;$("#mR").textContent=im.width+" x "+im.height+" px";$("#mS").textContent=S.stain;
+  $("#go").disabled=false;$("#go").classList.remove("d");$("#stage").textContent="";view();if(S.auto)run()};
+ im.onerror=()=>alert("Cannot open image");im.src=u}
+$("#drop").onclick=()=>$("#file").click();$("#file").onchange=e=>load(e.target.files[0]);
+document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="o"){e.preventDefault();$("#file").click()}});
+["dragover","dragleave","drop"].forEach(ev=>$("#drop").addEventListener(ev,e=>{e.preventDefault();$("#drop").classList.toggle("hot",ev==="dragover");if(ev==="drop")load(e.dataTransfer.files[0])}));
+$("#go").onclick=run;$("#rep").onclick=report;
+async function run(){if(!IMG||busy)return;busy=true;$("#go").disabled=true;$("#pill").textContent="● Analyzing…";
+ const tk=async m=>{$("#go").textContent="Analyzing… "+m;await new Promise(r=>setTimeout(r,30))};
+ try{await tk("Image Quality Check");const q=quality(IMG);if(!q.ok)throw Error(q.msg);
+  await tk("Preprocessing");await tk("Cell/Region Detection");const t0=performance.now(),f=analyze(IMG);await tk("Morphology & Texture");
+  await tk("CNN Feature Extraction");const p=score(f),ms=performance.now()-t0,thr=+S.thr,pos=p>=thr;
+  await tk("Feature Fusion");draw($("#cH"),IMG,f.sal,f.W,f.h);
+  const ov=document.createElement("canvas");draw(ov,IMG,f.sal,f.W,f.h);delete f.sal;await tk("Classification");
+  RES={p,pos,conf:pos?p:1-p,ms,f,q:q.msg,thr,file:FILE.name,time:new Date().toLocaleString("sv-SE"),ov,
+   risk:p>=Math.max(thr,.85)?"High-Priority Screening":pos?"Priority Review":"Routine / Low Suspicion"};
+  }catch(e){alert("Analysis failed: "+e.message)}
+ busy=false;$("#go").disabled=false;$("#go").textContent="Initialize Analysis Pipeline";$("#pill").textContent="● Model Ready (CPU)";view()}
+function view(){const r=RES;if(IMG)$("#mS").textContent=S.stain;$("#rep").disabled=!r;if(IMG)draw($("#cO"),IMG);else $("#cO").classList.remove("has");
+ const a=$("#alert");
+ if(!r){a.style.background="#E2E8F0";a.innerHTML='<span class="mu">No analysis yet</span><b>Load a specimen image and run the pipeline</b>';["oM","oL","oK","oC"].forEach(i=>$("#"+i).textContent="—");$("#oB").style.width="0";$("#hCap").textContent="Highlighted regions indicate areas driving the score.";
+  $("#cH").classList.remove("has")}
+ else{a.style.background=r.pos?"#FECACA":"#A7F3D0";a.innerHTML=`<span style="color:${r.pos?"#991B1B":"#047857"};font-weight:600">Predicted Class: ${H(r.pos?S.pos:S.neg)} (P+ ${(r.p*100).toFixed(1)}%)</span><b>${r.pos?"Leukemia-Associated Pattern Flagged":"No Leukemia-Associated Pattern Flagged"}</b>`;
+  $("#oM").textContent="DenseNet121 (CPU)";$("#oL").textContent=r.ms.toFixed(0)+" ms";$("#oK").textContent=r.risk;$("#oC").textContent=(r.conf*100).toFixed(1)+"%";$("#oB").style.width=r.conf*100+"%";$("#hCap").textContent="Method: Stain-density saliency (demo, not Grad-CAM). Highlighted regions drove the score."}
+ $("#ft").innerHTML=(r?describe(r.f):["Cell Morphology","Nuclear Appearance","Color Distribution","Texture Analysis","Cytoplasmic Features","Clustering Tendency"].map(c=>[c,"—","—"])).map(x=>`<tr><td><b>${x[0]}</b></td><td>${H(x[1])}</td><td class="mu">${H(x[2])}</td></tr>`).join("")}
+$("#met").innerHTML=[["Accuracy","acc"],["Precision","prec"],["Sensitivity","sens"],["Specificity","spec"],["F1 Score","f1"],["ROC-AUC","auc"]].map(([n,k])=>`<div class="kv"><span>${n}</span><b style="color:var(--ac)">${k==="auc"?fm(M[k]):pc(M[k])}</b></div>`).join("");
+$("#cm").innerHTML=[["TP","g"],["FN","rd"],["FP","rd"],["TN","g"]].map(([k,c])=>`<div class="${c}">${k}: ${M[k.toLowerCase()]}</div>`).join("");
+
+/* ---------- reports (stored in the browser with IndexedDB) ---------- */
+const jpg=c=>{const t=document.createElement("canvas"),k=Math.min(1,300/c.width);t.width=c.width*k;t.height=c.height*k;t.getContext("2d").drawImage(c,0,0,t.width,t.height);return t.toDataURL("image/jpeg",.7)};
+function buildReport(sid){const r=RES,pre=document.createElement("canvas");draw(pre,IMG);
+ const rows=describe(r.f).map(x=>`<tr><td>${H(x[0])}</td><td>${H(x[1])}</td><td>${H(x[2])}</td></tr>`).join("");
+ return`<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LEUKOTECH report</title><style>body{font-family:Segoe UI,Arial,sans-serif;max-width:900px;margin:20px auto;padding:0 14px;color:#0F172A}h2{border-bottom:1px solid #CBD5E1}table{border-collapse:collapse;width:100%}td,th{border:1px solid #CBD5E1;padding:6px;text-align:left;font-size:14px}th{background:#E0F2FE}.i{display:flex;gap:10px}.i figure{margin:0;flex:1;text-align:center;font-size:12px}.i img{max-width:100%}.warn{background:#FEF3C7;color:#92400E;padding:10px;border-radius:6px;margin:14px 0}.f{font-size:12px;color:#475569;margin-top:24px}</style></head><body>
+<h1>LEUKOTECH — Screening Report</h1><p>${H(r.time)}</p><div class="warn"><b></b></div><table><tr><th>Specimen ID</th><td>${H(sid||"—")}</td><th>File</th><td>${H(r.file)}</td></tr><tr><th>Stain</th><td>${H(S.stain)}</td><th>Model</th><td>DenseNet121 (CPU)</td></tr></table>
+<h2>Result</h2><p><b>Predicted class:</b> ${H(r.pos?S.pos:S.neg)} &nbsp; <b>Score (P positive):</b> ${(r.p*100).toFixed(1)}% &nbsp; <b>Threshold:</b> ${r.thr.toFixed(2)} &nbsp; <b>Risk category:</b> ${H(r.risk)} &nbsp; <b>Latency:</b> ${r.ms.toFixed(0)} ms</p><p>Image quality: ${H(r.q)}</p>
+<div class="i"><figure><img src="${jpg(pre)}"><figcaption>Specimen</figcaption></figure><figure><img src="${jpg(r.ov)}"><figcaption>Stain-density saliency (demo, not Grad-CAM)</figcaption></figure></div><h2>Cell pattern &amp; morphometric breakdown</h2><table><tr><th>Feature class</th><th>Observed trait</th><th>Computational signal</th></tr>${rows}</table>
+<h2>Model validation (SAMPLE DATA)</h2><p>n=${M.tp+M.fn+M.fp+M.tn} images · Accuracy ${pc(M.acc)} · Sensitivity ${pc(M.sens)} · Specificity ${pc(M.spec)} · Precision ${pc(M.prec)} · F1 ${pc(M.f1)} · ROC-AUC ${fm(M.auc)} · TP ${M.tp} / FN ${M.fn} / FP ${M.fp} / TN ${M.tn} · <b>()</b></p>
+<p class="f">LEUKOTECH is an educational research prototype. It does not diagnose leukemia or replace laboratory or clinical evaluation.</p></body></html>`}
+const DB=()=>new Promise((ok,no)=>{const q=indexedDB.open("leukotech",1);q.onupgradeneeded=()=>q.result.createObjectStore("reports",{keyPath:"name"});q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error)});
+const tx=async(m,f)=>{const d=await DB();return new Promise((ok,no)=>{const t=d.transaction("reports",m),r=f(t.objectStore("reports"));t.oncomplete=()=>ok(r.result);t.onerror=()=>no(t.error)})};
+function download(name,html){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([html],{type:"text/html"}));a.download=name;a.click()}
+async function report(){if(!RES)return;const sid=prompt("Specimen / patient reference (optional):")||"",html=buildReport(sid),
+ name="report_"+new Date().toISOString().replace(/\D/g,"").slice(0,14)+"_"+FILE.name.replace(/\.[^.]+$/,"").replace(/[^\w-]/g,"_").slice(0,30)+".html";
+ try{await tx("readwrite",s=>s.put({name,time:RES.time,sid:sid||"—",file:RES.file,result:RES.pos?S.pos:S.neg,score:(RES.p*100).toFixed(1)+"%",mode:"DEMO",size:html.length,html}));show("Reports")}
+ catch(e){download(name,html);alert("Could not save in the browser ("+e.message+"). Report downloaded instead.")}}
+async function loadReports(){try{const l=await tx("readonly",s=>s.getAll());l.sort((a,b)=>b.name.localeCompare(a.name));
+ const bt=(a,c,t,n)=>`<button class="b ${c}" data-a="${a}" data-n="${H(n)}">${t}</button>`;
+ $("#rl").innerHTML=l.length?"<table><tr><th>Time</th><th>Specimen ID</th><th>Image</th><th>Result</th><th>P(+)</th><th>Mode</th><th></th></tr>"+l.map(x=>`<tr><td>${H(x.time)}</td><td>${H(x.sid)}</td><td>${H(x.file)}</td><td>${H(x.result)}</td><td>${H(x.score)}</td><td>${H(x.mode||"DEMO")}</td><td style="white-space:nowrap">${bt("o","","Open",x.name)} ${bt("d","d","Download",x.name)} ${bt("x","r","Delete",x.name)}</td></tr>`).join("")+"</table>":"No reports yet. Run an analysis, then click Generate Report."}
+ catch(e){$("#rl").textContent="Browser storage is unavailable (private window or blocked). Reports will download instead."}}
+$("#rl").onclick=async e=>{const b=e.target.closest("button");if(!b)return;const n=b.dataset.n;
+ if(b.dataset.a==="x"){if(confirm("Delete this report file and history entry?")){await tx("readwrite",s=>s.delete(n));loadReports()}return}
+ const r=await tx("readonly",s=>s.get(n));if(!r)return;
+ if(b.dataset.a==="d")download(n,r.html);else window.open(URL.createObjectURL(new Blob([r.html],{type:"text/html"})),"_blank")};
+
+/* ---------- settings / glossary / team ---------- */
+const DEF={neg:"Non-leukemia",pos:"Leukemia-associated",thr:.5,stain:"Wright-Giemsa",auto:false,norm:"imagenet",idx:1};S=Object.assign({},DEF,S);
+function sLoad(){$("#sNorm").value=S.norm;$("#sIdx").value=S.idx;$("#sNeg").value=S.neg;$("#sPos").value=S.pos;$("#sThr").value=S.thr;$("#tv").textContent=(+S.thr).toFixed(2);$("#sSt").value=S.stain;$("#sAuto").checked=S.auto}
+$("#sThr").oninput=e=>$("#tv").textContent=(+e.target.value).toFixed(2);
+$("#sSave").onclick=()=>{S={norm:$("#sNorm").value,idx:parseInt($("#sIdx").value)||0,neg:$("#sNeg").value.trim()||"Negative",pos:$("#sPos").value.trim()||"Positive",thr:+$("#sThr").value,stain:$("#sSt").value.trim(),auto:$("#sAuto").checked};try{localStorage.setItem("lk",JSON.stringify(S))}catch(e){}view()};
+$("#sReset").onclick=()=>{S={...DEF};sLoad()};sLoad();
+const G=`#Specimen & Image
+Blood smear :: A thin layer of blood spread on a glass slide, stained with dye, and examined under a microscope.
+Specimen :: The sample being examined. In this app, one microscope image of a blood smear.
+Specimen ID :: An optional reference label (for example a sample or patient code) you type when generating a report.
+Microscopic image :: A digital photo of the slide taken through a microscope.
+Wright-Giemsa stain :: A common dye mixture for blood smears. It colors cell nuclei purple-blue and red blood cells pink, which makes the cells easy to tell apart.
+Resolution :: The image size in pixels (width x height). More pixels means more visible detail.
+Pixel (px) :: The smallest dot that makes up a digital image.
+Image format (JPG, PNG, BMP, TIFF) :: The file type of the image. JPG is compressed and small, PNG is compressed without losing detail, BMP is uncompressed, and TIFF is a high-quality format common in microscopy.
+Sharpness / blur :: How crisp the edges in the image are. The quality check measures edge strength and warns of 'possible blur' when it is very low.
+Underexposed / overexposed :: Too dark or too bright. The quality check warns when the average brightness is very low (below 70 of 255) or very high (above 235 of 255).
+#Blood & Cell Biology
+Leukemia :: A cancer of the blood-forming tissues in which abnormal white blood cells multiply uncontrollably. It is diagnosed by laboratory and clinical tests, not by this app.
+Leukemia-associated pattern :: A visual pattern (for example many dense, varied nuclei) that the app's score leans toward. It is a flag for review, not a diagnosis.
+White blood cell (WBC / leukocyte) :: An immune-system cell. It has a nucleus, so it stains dark purple on a smear.
+Red blood cell (RBC) :: A cell that carries oxygen. It has no nucleus and appears pink on a stained smear.
+Nucleus (plural: nuclei) :: The part of a cell that holds its DNA. It takes up the dye strongly and appears dark purple.
+Cytoplasm :: The material between the nucleus and the outer membrane of a cell.
+Blast cell :: An immature white blood cell. Large numbers of blasts in blood can suggest leukemia. This app does not specifically identify blasts.
+Hyperchromatic :: Staining darker than normal, often because the nucleus contains dense material.
+Basophilia :: A tendency to stain blue-purple with basic dyes. Stronger basophilia means a deeper blue tone.
+Granular / granules :: Tiny grain-like specks visible in a cell's cytoplasm.
+Morphology :: The shape, size, and structure of cells.
+Screening :: A quick first check used to decide whether further testing is needed. It is not a diagnosis.
+#Image Analysis Pipeline
+Pipeline :: The ordered series of processing steps the app runs on an image: quality check, preprocessing, region detection, measurements, classification, explainability, and decision.
+Image Quality Check :: The first step. It rejects images smaller than 64 px per side and warns about blur or poor exposure.
+Preprocessing :: Preparing the image before analysis, such as resizing it and rescaling its pixel values to match what the model expects.
+Segmentation :: Separating the parts of interest (stained nuclear material) from the background.
+Otsu thresholding :: An automatic method that picks the brightness cutoff that best splits dark pixels from bright ones. The app applies it to the red channel.
+Red channel :: The red values of each pixel. Pink red cells stay bright in it while purple nuclei are dark, so it separates them well.
+Mask :: A black-and-white map marking which pixels belong to the detected stained regions.
+Connected component :: A group of touching mask pixels treated as one object. Very small groups are ignored as noise.
+Candidate cell regions :: The number of connected stained regions found. They are candidates, not confirmed cells.
+Morphometrics :: Measuring the size and shape of structures, such as area, elongation, and roundness.
+Computational signal :: The numeric measurement behind each observed trait in the breakdown table.
+Observed trait :: A plain-language description of what a measurement suggests, produced by simple fixed rules rather than clinical criteria.
+#Measurements
+n (cell count) :: How many stained regions were detected in the analysed image.
+Area CV (coefficient of variation) :: The spread of region sizes divided by their average size. Higher values mean more variation. The app calls it moderate above 0.35 and marked above 0.6.
+Aspect ratio :: The longer side of a region's bounding box divided by the shorter side. About 1 is roughly square or round; larger means more elongated.
+Circularity :: How close a region's shape is to a perfect circle. 1 is a circle; lower values are more irregular.
+Nuclear area ratio :: The fraction of the image covered by stained nuclear regions, from 0 to 1.
+Entropy :: How varied the brightness values in the image are, in bits. Higher means more complex or varied.
+Basophilia index :: The average blue value divided by the average red value inside stained regions. Higher means a bluer, more basophilic stain.
+Asymmetry :: How unevenly the stained area is split between the left and right halves and between the top and bottom halves. 0 means perfectly balanced.
+Optical density (OD) :: How much light the stained regions absorb. Higher means darker, denser staining.
+Texture :: The pattern of brightness changes across an image, from smooth to rough.
+GLCM (gray-level co-occurrence matrix) :: A table counting how often pairs of neighboring pixels with particular brightness levels occur. Texture statistics such as contrast and homogeneity are computed from it.
+GLCM contrast :: Weights neighboring pixel pairs by how different their brightness is. Higher means sharper, more abrupt changes. Above 6, the app calls the texture heterogeneous.
+Homogeneity (GLCM) :: High when neighboring pixels have similar brightness. Values range from 0 to 1.
+Heterogeneous / homogeneous :: Varied and uneven versus uniform and even.
+Granularity :: The average edge strength in the non-nuclear area. Higher means a grainier background or cytoplasm.
+Laplacian :: A filter that measures how quickly brightness changes from pixel to pixel. It highlights edges and fine detail.
+Clark-Evans R :: A nearest-neighbour index of how cells are spread out. Below 1 means clustered, about 1 means random, and above 1 means evenly dispersed. The app labels below 0.8 as aggregation and above 1.2 as evenly dispersed.
+Clustering tendency :: Whether detected cells group together more than chance would predict.
+Cells per 10k px2 :: Detected regions per 10,000 pixels of the analysed (downscaled) image. It shows how crowded the field is.
+#AI Model & Scoring
+Model :: A trained program that turns an image into a score.
+Classification :: Assigning an image to one of two classes: the negative class or the positive (leukemia-associated) class.
+CNN (convolutional neural network) :: A type of neural network designed for images. It learns patterns such as edges, textures, and shapes by itself.
+DenseNet121 :: A CNN architecture with 121 layers in which every layer connects to all later layers. It is the default model name shown here. In demo mode no DenseNet is actually running.
+Feature extraction :: Converting an image into a list of numbers that capture its patterns, so a classifier can use them.
+Feature fusion :: Combining different kinds of features (for example learned and hand-measured ones) into one input. Here it is a pipeline stage label; a loaded model uses the image only.
+Demo mode :: Active when no trained model is loaded. The score comes from a simple placeholder rule based on the measurements. It is not a real classifier.
+ONNX :: A file format (.onnx) for exchanging trained models between tools. It runs through the onnxruntime package.
+PyTorch / TorchScript :: PyTorch is a deep-learning library (.pt or .pth files). TorchScript is a saved form of a PyTorch model that can load without its original code.
+state_dict :: A PyTorch file holding only a model's learned weights, not its structure. The app cannot load these alone.
+CPU / CUDA :: CPU is the computer's general processor. CUDA means using an NVIDIA graphics card, which is usually faster for models.
+Input size :: The width and height in pixels the model expects (224 by default). The image is resized to this.
+Normalization :: Rescaling pixel values the way the model was trained: imagenet subtracts the ImageNet mean and divides by its spread, zero_one scales to 0-1, and minus_one_one scales to -1 to 1.
+Positive class output index :: Which output number of the model represents the positive (leukemia-associated) class.
+Probability / P(+) score :: The model's estimated chance, from 0 to 100%, that the image belongs to the positive class. It is an estimate, not a guarantee.
+Decision threshold :: The cutoff for calling an image positive. A score at or above it is positive. Lowering it catches more cases but raises false alarms.
+Confidence rating :: The probability of the predicted class: P(+) when positive, otherwise 1 minus P(+).
+Risk category :: A label from the score and threshold: Routine / Low Suspicion, Priority Review (score at or above the threshold), or High-Priority Screening (at or above both the threshold and 85%).
+Inference / inference latency :: Inference is running the model on an image. Latency is how long it takes, in milliseconds (ms).
+Explainability :: Showing which parts of the image most influenced the score.
+Heatmap :: A color overlay on the image. Warmer colors mark areas that mattered more.
+Grad-CAM :: An explainability method that uses a CNN's internal gradients to highlight influential regions. Available for PyTorch models that are not TorchScript.
+Occlusion sensitivity :: An explainability method that hides one patch of the image at a time and measures how much the score drops.
+Saliency :: A map of what stands out. In demo mode it is a blurred map of stain density, not Grad-CAM.
+#Performance Metrics
+Validation :: Testing a model on labeled images to measure how well it performs.
+Confusion matrix :: A 2 x 2 table of correct and incorrect predictions: TP, FN, FP, and TN.
+TP (true positive) :: A positive case the model correctly flagged as positive.
+TN (true negative) :: A negative case the model correctly called negative.
+FP (false positive) :: A negative case wrongly flagged as positive (a false alarm).
+FN (false negative) :: A positive case the model missed.
+Accuracy :: The share of all predictions that were correct: (TP + TN) / total.
+Precision :: Of the cases flagged positive, the share that really were positive: TP / (TP + FP).
+Sensitivity (recall) :: Of the truly positive cases, the share the model caught: TP / (TP + FN).
+Specificity :: Of the truly negative cases, the share correctly cleared: TN / (TN + FP).
+F1 score :: A single number balancing precision and sensitivity. It is high only when both are high.
+ROC-AUC :: How well the score separates positive from negative cases across all thresholds. 1.0 is perfect and 0.5 is no better than chance.
+Sample values :: Fixed placeholder numbers shown in the metrics boxes. They are not the result of a real evaluation.
+#App Terms
+Research prototype :: A project built to explore or demonstrate an idea. It has not been validated for medical use.
+Stain label :: A text setting that records which stain was used. It appears on screen and in reports and does not change the analysis.
+Class names :: The two labels shown for the negative and positive results. You can rename them in Settings.
+Auto-run analysis :: A setting that starts the pipeline as soon as an image is loaded.
+Report :: An HTML file summarizing one analysis: image, heatmap, score, measurements, and disclaimer.`.split("\n");
+const gr=()=>{const q=$("#gq").value.toLowerCase();let h="",n=0,cat="",rows="";const fl=()=>{if(rows)h+=`<h4>${H(cat)}</h4><table>${rows}</table>`;rows=""};
+ for(const l of G){if(l[0]==="#"){fl();cat=l.slice(1);continue}const[t,d]=l.split(" :: ");if(!q||(t+" "+d).toLowerCase().includes(q)){rows+=`<tr><td class="gt">${H(t)}</td><td class="mu">${H(d)}</td></tr>`;n++}}
+ fl();$("#gt").innerHTML=h||'<p class="mu">No matching terms.</p>';$("#gc").textContent=n+" terms"};$("#gq").oninput=gr;gr();
+$("#team").innerHTML=[["Juan Miguel Santos","Project Leader / Lead Programmer & Software Developer","Leads the overall LeukoTech project and serves as the main programmer. Develops the core software, integrates the image-processing and machine-learning components, manages the system architecture, and coordinates the team’s technical and research tasks."],["Reiana Ross Belchez","Data Researcher","Handles the collection, organization, and preparation of leukemia blood-cell image datasets. Assists in selecting appropriate machine-learning approaches, analyzing dataset characteristics, and evaluating model performance."],["Dexter Ogale","Software & Quality Tester","Conducts systematic testing of the LeukoTech software and records errors, bugs, and inconsistencies. Verifies whether the system produces reliable and consistent results and documents findings for software improvement."],["Uzziah Atender","Research Documentation & Data Monitoring Officer","Maintains research records, tracks project progress, and organizes experimental results. Monitors dataset usage, testing records, and model-performance results while assisting in the preparation of tables, graphs, and research documentation."]]
+ .map(t=>{const p=t[0].split(" ");return`<div style="display:flex;gap:14px;background:var(--in);border:1px solid var(--bd);border-radius:10px;padding:14px;margin-bottom:10px"><div style="flex:none;width:56px;height:56px;border-radius:50%;background:var(--ac);color:#fff;font:700 18px Georgia,serif;display:flex;align-items:center;justify-content:center">${p[0][0]+p[p.length-1][0]}</div><div><div style="font:700 17px Georgia,serif">${H(t[0])}</div><div style="color:var(--ac);font-weight:600;margin:2px 0 6px">${H(t[1])}</div><div class="mu">${H(t[2])}</div></div></div>`}).join("");
+view();
+</script></body></html>
